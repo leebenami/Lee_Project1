@@ -1,6 +1,6 @@
 function saveNewNote() {
-  const inputs = document.querySelectorAll("input");
-  const textArea = document.querySelector("textarea");
+  const inputs = document.querySelectorAll('input');
+  const textArea = document.querySelector('textarea');
 
   const note = {
     mission: textArea.value,
@@ -8,7 +8,7 @@ function saveNewNote() {
     time: inputs[1].value,
   };
 
-  const currenNotes = localStorage.getItem("allNotes");
+  const currenNotes = localStorage.getItem('allNotes');
 
   let arr = [];
 
@@ -18,27 +18,27 @@ function saveNewNote() {
 
   arr.push(note);
 
-  localStorage.setItem("allNotes", JSON.stringify(arr));
+  localStorage.setItem('allNotes', JSON.stringify(arr));
 
-  textArea.value = "";
-  inputs[0].value = "";
-  inputs[1].value = "";
+  textArea.value = '';
+  inputs[0].value = '';
+  inputs[1].value = '';
 
   loadNotes(true);
 }
 
 function loadNotes(newNote = false) {
-  const currenNotes = localStorage.getItem("allNotes");
+  const currenNotes = localStorage.getItem('allNotes');
   if (currenNotes) {
-    const notesDiv = document.querySelector("#notes");
-    let noteBuild = "";
+    const notesDiv = document.querySelector('#notes');
+    let noteBuild = '';
     const arr = JSON.parse(currenNotes);
     for (let i = 0; i < arr.length; i++) {
       const note = arr[i];
 
-      let noteClassName = "noteDivs";
+      let noteClassName = 'noteDivs';
       if (newNote && i === arr.length - 1) {
-        noteClassName += " new-note";
+        noteClassName += ' new-note';
       }
       //Create New Note
       noteBuild += `
@@ -54,26 +54,26 @@ function loadNotes(newNote = false) {
     }
     notesDiv.innerHTML = noteBuild;
   }
-  const icons = document.querySelectorAll("i");
+  const icons = document.querySelectorAll('i');
   for (const icon of icons) {
     icon.onclick = remove;
   }
 }
 
 function remove(event) {
-  const iconIndex = event.target.getAttribute("icon-index");
+  const iconIndex = event.target.getAttribute('icon-index');
   const element = document.getElementById(`noteDivs_${iconIndex}`);
 
   if (element) {
     //Add Fade-Out Animation To Deleted Note
-    element.classList.add("delete-note");
+    element.classList.add('delete-note');
     setTimeout(() => {
       element.remove();
-      const currenNotes = localStorage.getItem("allNotes");
+      const currenNotes = localStorage.getItem('allNotes');
       if (currenNotes) {
         const arr = JSON.parse(currenNotes);
         arr.splice(iconIndex, 1);
-        localStorage.setItem("allNotes", JSON.stringify(arr));
+        localStorage.setItem('allNotes', JSON.stringify(arr));
         //Reload the notes to create an overlap between notes[i] and the array
         loadNotes();
       }
@@ -82,12 +82,12 @@ function remove(event) {
 }
 
 function clearInputValues() {
-  const inputs = document.querySelectorAll("input");
-  const textArea = document.querySelector("textarea");
+  const inputs = document.querySelectorAll('input');
+  const textArea = document.querySelector('textarea');
 
-  textArea.value = "";
-  inputs[0].value = "";
-  inputs[1].value = "";
+  textArea.value = '';
+  inputs[0].value = '';
+  inputs[1].value = '';
 }
 
 function onFormSubmit(event) {
@@ -98,10 +98,10 @@ function onFormSubmit(event) {
 function onWindowLoad() {
   loadNotes();
 
-  const form = document.querySelector("form");
+  const form = document.querySelector('form');
   form.onsubmit = onFormSubmit;
 
-  const resetBtn = document.querySelector("#resetBtn");
+  const resetBtn = document.querySelector('#resetBtn');
   resetBtn.onclick = clearInputValues;
 }
 
